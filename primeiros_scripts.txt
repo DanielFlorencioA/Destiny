@@ -1,0 +1,64 @@
+-- Posso realizar comentários no meu Script;
+
+-- Criação do arquivo de banco de dados se não existir;
+CREATE DATABASE IF NOT EXISTS banco_de_dados;
+
+-- Especificar qual banco de dados estou usando;
+USE banco_de_dados;
+
+-- Criar uma tabela no banco de dados usado;
+CREATE TABLE IF NOT EXISTS usuarios (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    data_de_nascimento DATE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+
+-- Criação da tabela de perfis;
+CREATE TABLE IF NOT EXISTS perfis(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    bio TEXT,
+    avatar_url VARCHAR(255),
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    );
+    
+-- Inserção de dados;
+
+-- Determino qual arquivo de BD estou utilizando para realizar algo
+USE banco_de_dados;
+
+-- Inserir os dados na tabela 'usuarios'
+INSERT INTO usuarios(nome, email, senha, data_nascimento) VALUES
+('Presidente', 'presidentejunior@gmail.com', '123_presidencia', 1970-01-01),
+('Widley', 'eusouwidley@gmail.com', 'meu_nome_widley123', 1999-15-12);
+
+-- Inserir os dados na tabela 'perfis'
+INSERT INTO perfis(usuario_id, bio, avatar_url) VALUES
+(1, 'Desenvolvedor Full-Stack Sênior do Google', 'https://exemplodefoto.com.br'),
+(2, 'Gerente de projetos da Tesla', 'https://testafotosdowidley.com');
+
+-- Exemplo de atualização de dados
+
+UPDATE usuarios
+SET
+	nome = 'José Júnior',
+    email = 'expresidentejunior@gmail.com'
+WHERE
+	id = 1;
+    
+-- Exemplo de como visualizar se a atualização foi feita
+
+SELECT * FROM usuarios WHERE id = 1
+
+
+
+
+
+
+
